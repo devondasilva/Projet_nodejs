@@ -14,12 +14,21 @@ class Projecteur{
         })
     }
 
-    afficher(req, res){
+    getAll(req, res){
         const sql ="SELECT * FROM projecteur WHERE quantite >= 1";
         db.all(sql, [], (error, rows)=>{
             if(error) return res.json({Status: "Erreur"});
 
             return res.json({ Status: "Succes", Result: rows });
+        })
+    }
+
+    getOne(req, res){
+        const sql = "SELECT * FROM projecteur WHERE id = ?";
+        const id = req.params.id;
+        db.get(sql, [id], (error, row)=>{
+            if(error) return res.json({Status: "Erreur"});
+            return res.json({Status: "Succes", Result: row});
         })
     }
 
@@ -35,6 +44,16 @@ class Projecteur{
             return res.json({Status: "succes "})
         })
 
+    }
+
+
+    delete(req, res){
+        const sql = "DELETE FROM projecteur WHERE id = ?";
+        const id = req.params.id;
+        db.run(sql, [id], (err)=>{
+            if(err) return res.json({Status: "Erreur"});
+            return res.json({Status: "Succes"})
+        })
     }
 }
 

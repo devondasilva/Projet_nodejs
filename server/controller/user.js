@@ -18,6 +18,19 @@ class Users {
         });
     }
 
+    getOne(req, res) {
+        const sql = "SELECT id, name, email, role FROM users WHERE id = ?"; // Utilisation de la table users
+        const id = req.params.id;
+
+        db.get(sql, [id], (error, row) => {
+            if (error) {
+                console.error("Database error:", error);
+                return res.status(500).json({ Status: "Error", Error: "Erreur serveur." });
+            }
+            return res.json({ Status: "Succes", Result: row });
+        });
+    }
+
     register(req, res) {
         const sql = "INSERT INTO users (name, email, role, password) VALUES (?, ?, ?, ?)"; // Utilisation de la table users
         const { name, email, role, password } = req.body;
@@ -40,6 +53,7 @@ class Users {
         });
     }
 
+    
     login(req, res) {
         const sql = "SELECT * FROM users WHERE email = ?"; // Utilisation de la table users
         const { email, password } = req.body;

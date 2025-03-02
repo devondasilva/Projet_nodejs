@@ -9,6 +9,8 @@ const db = new sqlite.Database('data.db', (err) => {
     }
     console.log('Connecté à la base de données SQLite.');
 
+   
+
     const createTableUsers = `
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -27,8 +29,8 @@ const db = new sqlite.Database('data.db', (err) => {
             quantite INTEGER NOT NULL
         )
     `;
-    const createTableAction = `
-        CREATE TABLE IF NOT EXISTS action (
+    const createTableReservation = `
+        CREATE TABLE IF NOT EXISTS reservation (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
             projecteur_id TEXT NOT NULL,
@@ -47,6 +49,8 @@ const db = new sqlite.Database('data.db', (err) => {
         }
     });
 
+    
+
     db.run(createTableProjecteur, (err) => {
         if (err) {
             console.log('Erreur lors de la création de la table "projecteur" :', err.message);
@@ -55,9 +59,9 @@ const db = new sqlite.Database('data.db', (err) => {
         }
     });
 
-    db.run(createTableAction, (err) => {
+    db.run(createTableReservation, (err) => {
         if (err) {
-            console.log('Erreur lors de la création de la table "action" :', err.message);
+            console.log('Erreur lors de la création de la table "reservation" :', err.message);
         } else {
             console.log('Table "Action" créée avec succès.');
         }
